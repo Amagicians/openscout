@@ -42,8 +42,8 @@ utils_ops.tf = tf.compat.v2
 # Patch the location of gfile
 tf.gfile = tf.io.gfile
 
-#tf.get_logger().warning('test')
-# WARNING:tensorflow:test
+#tf.get_logger().warning('ProblemThree')
+# WARNING:tensorflow:ProblemThree
 tf.get_logger().setLevel('ERROR')
 
 logger = logging.getLogger(__name__)

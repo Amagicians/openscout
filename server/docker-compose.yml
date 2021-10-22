@@ -47,12 +47,28 @@ services:
     environment:
       - WEBSERVER=${WEBSERVER_URL}:${HTTP_PORT}
 
+  hello-engine:
+    image: cmusatyalab/openscout:${OPENSCOUT_TAG}
+    container_name: openscout-hello-engine
+    restart: unless-stopped
+    privileged: true
+    entrypoint: [ "./hello.py", "--name", "siyuanji"]
+    volumes:
+      - ./openscout-vol:/openscout/server/images/
+    depends_on:
+      - gabriel-server
+    networks:
+      - openscout-net
+      - elk
+    environment:
+      - WEBSERVER=${WEBSERVER_URL}:${HTTP_PORT}
+
   object-engine:
     image: cmusatyalab/openscout:${OPENSCOUT_TAG}
     container_name: openscout-object-engine
     restart: unless-stopped
     privileged: true
-    entrypoint: ["./obj.py", "--model", "${DNN}", "--threshold", "${OBJ_THRESHOLD}", "--exclude", "${EXCLUSIONS}", "${STORE}"]
+    entrypoint: ["./obj.py", "--model", "--timing", "${DNN}", "--threshold", "${OBJ_THRESHOLD}", "--exclude", "${EXCLUSIONS}", "${STORE}"]
     # for NVIDIA GPUs
     # gpus: all     # not yet supported by docker-compose
     runtime: nvidia
@@ -98,7 +114,7 @@ services:
   #     - Billing=${BILLING_ENDPOINT}
   #     - ApiKey=${API_KEY}
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:${ELK_VERSION}-amd64
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELK_VERSION}
     container_name: elasticsearch
     environment:
       - discovery.type=single-node
@@ -109,7 +125,7 @@ services:
     networks:
       - elk
   kibana:
-    image: docker.elastic.co/kibana/kibana-oss:${ELK_VERSION}
+    image: docker.elastic.co/kibana/kibana:${ELK_VERSION}
     container_name: kibana
     ports:
       - 5601:5601
@@ -120,7 +136,7 @@ services:
     depends_on:
       - elasticsearch
   logstash:
-    image: docker.elastic.co/logstash/logstash-oss:${ELK_VERSION}
+    image: docker.elastic.co/logstash/logstash:${ELK_VERSION}
     container_name: logstash
     ports:
       - 5044:5044

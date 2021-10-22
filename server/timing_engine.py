@@ -21,6 +21,10 @@
 from openscout_object_engine import OpenScoutObjectEngine
 from openscout_face_engine import OpenFaceEngine, MSFaceEngine
 import time
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 #TODO: these timing engines need work as the metrics here are still inherited from OpenRTiST
 class TimingOpenFaceEngine(OpenFaceEngine):
@@ -38,12 +42,12 @@ class TimingOpenFaceEngine(OpenFaceEngine):
 
         self.count += 1
         if self.t3 - self.lastprint > 5:
-            print("pre {0:.1f} ms, ".format((self.t1 - self.t0) * 1000), end="")
-            print("infer {0:.1f} ms, ".format((self.t2 - self.t1) * 1000), end="")
-            print("post {0:.1f} ms, ".format((self.t3 - self.t2) * 1000), end="")
-            print("wait {0:.1f} ms, ".format((self.t0 - self.lasttime) * 1000), end="")
-            print("fps {0:.2f}".format(1.0 / (self.t3 - self.lasttime)))
-            print(
+            logger.info("pre {0:.1f} ms, ".format((self.t1 - self.t0) * 1000))
+            logger.info("infer {0:.1f} ms, ".format((self.t2 - self.t1) * 1000))
+            logger.info("post {0:.1f} ms, ".format((self.t3 - self.t2) * 1000))
+            logger.info("wait {0:.1f} ms, ".format((self.t0 - self.lasttime) * 1000))
+            logger.info("fps {0:.2f}".format(1.0 / (self.t3 - self.lasttime)))
+            logger.info(
                 "avg fps: {0:.2f}".format(
                     (self.count - self.lastcount) / (self.t3 - self.lastprint)
                 )
@@ -78,12 +82,12 @@ class TimingMSFaceEngine(MSFaceEngine):
 
         self.count += 1
         if self.t3 - self.lastprint > 5:
-            print("pre {0:.1f} ms, ".format((self.t1 - self.t0) * 1000), end="")
-            print("infer {0:.1f} ms, ".format((self.t2 - self.t1) * 1000), end="")
-            print("post {0:.1f} ms, ".format((self.t3 - self.t2) * 1000), end="")
-            print("wait {0:.1f} ms, ".format((self.t0 - self.lasttime) * 1000), end="")
-            print("fps {0:.2f}".format(1.0 / (self.t3 - self.lasttime)))
-            print(
+            logger.info("pre {0:.1f} ms, ".format((self.t1 - self.t0) * 1000))
+            logger.info("infer {0:.1f} ms, ".format((self.t2 - self.t1) * 1000))
+            logger.info("post {0:.1f} ms, ".format((self.t3 - self.t2) * 1000))
+            logger.info("wait {0:.1f} ms, ".format((self.t0 - self.lasttime) * 1000))
+            logger.info("fps {0:.2f}".format(1.0 / (self.t3 - self.lasttime)))
+            logger.info(
                 "avg fps: {0:.2f}".format(
                     (self.count - self.lastcount) / (self.t3 - self.lastprint)
                 )
@@ -125,12 +129,12 @@ class TimingObjectEngine(OpenScoutObjectEngine):
 
         self.count += 1
         if self.t3 - self.lastprint > 5:
-            print("pre {0:.1f} ms, ".format((self.t1 - self.t0) * 1000), end="")
-            print("infer {0:.1f} ms, ".format((self.t2 - self.t1) * 1000), end="")
-            print("post {0:.1f} ms, ".format((self.t3 - self.t2) * 1000), end="")
-            print("wait {0:.1f} ms, ".format((self.t0 - self.lasttime) * 1000), end="")
-            print("fps {0:.2f}".format(1.0 / (self.t3 - self.lasttime)))
-            print(
+            logger.info("pre {0:.1f} ms, ".format((self.t1 - self.t0) * 1000))
+            logger.info("infer {0:.1f} ms, ".format((self.t2 - self.t1) * 1000))
+            logger.info("post {0:.1f} ms, ".format((self.t3 - self.t2) * 1000))
+            logger.info("wait {0:.1f} ms, ".format((self.t0 - self.lasttime) * 1000))
+            logger.info("fps {0:.2f}".format(1.0 / (self.t3 - self.lasttime)))
+            logger.info(
                 "avg fps: {0:.2f}".format(
                     (self.count - self.lastcount) / (self.t3 - self.lastprint)
                 )

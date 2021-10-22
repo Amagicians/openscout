@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     python3-pyqt5 \
+    tesseract-ocr \
     wget \
  && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -29,6 +30,8 @@ RUN python3 -m pip install --no-cache-dir \
     'PyQt5==5.14.0' \
     pyzmq \
     'setuptools==41.0.0' \
+    pytesseract \
+    pandas \
     'websockets==8.0.0' \
     zmq 
 #Install Filebeats to push log data to ELK
